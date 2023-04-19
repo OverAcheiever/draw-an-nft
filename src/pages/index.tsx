@@ -1,26 +1,32 @@
-import { LegacyRef, useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import Webcam from "react-webcam";
 import axios from "axios";
+import { Upload } from "upload-js";
 
 const Home = () => {
   const [image, setImage] = useState<string>();
 
   const webcam = useRef(null);
 
-  const capture = useCallback(() => {
+  const capture = useCallback(async () => {
     // @ts-ignore
     const image = webcam.current.getScreenshot();
 
     !image ? console.log("No image") : setImage(image);
 
-    axios
+    const upload = Upload({
+      apiKey: "public_FW25bEJ7ui1TUNcbksHrpcwoDHqA",
+    });
+
+    const { fileUrl } = await upload.uploadFile(
+      await (await fetch(image)).blob()
+    );
+
+      axios
       .post("https://stablediffusionapi.com/api/v5/pix2pix", {
         key: "GkTrr60EN0X5XTZHAa9av56a750QJMp6SNBzBNSfrvPyITELZkWvvAz4LuTb",
         prompt: "digital art",
-        init_image: image,
-        image_guidance_scale: 1,
-        steps: 50,
-        guidance_scale: 7,
+        init_image: fileUrl,
       })
       .then((res) => {
         console.log(res);
