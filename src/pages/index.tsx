@@ -75,9 +75,7 @@ const Home = () => {
             </button>
           </>
         ) : (
-          <div>
-            <img src={data.image} className="h-full w-full rounded-lg" />
-          </div>
+          <img src={data.image} className="h-full w-full rounded-lg" />
         )}
       </div>
     </div>
