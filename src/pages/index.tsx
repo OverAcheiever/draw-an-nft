@@ -48,7 +48,7 @@ const Home = () => {
 
   return (
     <div className="flex h-screen w-full items-center justify-center bg-black font-space text-white outline outline-1 outline-offset-1 outline-white">
-      <div className="flex max-w-screen-sm flex-col items-center">
+      <div className="flex max-w-screen-sm flex-col items-center px-5 lg:px-0">
         {isLoading ? (
           "Loading..."
         ) : !data ? (
